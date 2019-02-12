@@ -107,23 +107,23 @@ endif
 
 openhmd_lib = library('openhmd', sources, include_directories : include_directories('./include'), c_args : c_args, dependencies : deps, install : true, version : library_version)
 
-# build examples only for shared library. shared is the default
-if get_option('default_library') == 'shared'
-	_examples = get_option('examples')
-	if _examples.contains('simple')
-		executable('openhmd_simple_example', 'examples/simple/simple.c', include_directories : include_directories('./include'), link_with: [openhmd_lib], install : true)
-	endif
+#
+# Examples
+#
+_examples = get_option('examples')
+if _examples.contains('simple')
+	executable('openhmd_simple_example', 'examples/simple/simple.c', include_directories : include_directories('./include'), link_with: [openhmd_lib], install : true)
+endif
 
-	if _examples.contains('opengl')
-		opengl_sources = [
-			'examples/opengl/main.c',
-			'examples/opengl/gl.c',
-		]
-		sdldep = dependency('sdl2')
-		gldep = dependency('gl')
-		glewdep = dependency('glew')
-		executable('openhmd_opengl_example', opengl_sources , include_directories : include_directories(['./include', 'examples/opengl']), link_with: [openhmd_lib], dependencies : [sdldep, gldep, glewdep], install : true)
-	endif
+if _examples.contains('opengl')
+	opengl_sources = [
+		'examples/opengl/main.c',
+		'examples/opengl/gl.c',
+	]
+	sdldep = dependency('sdl2')
+	gldep = dependency('gl')
+	glewdep = dependency('glew')
+	executable('openhmd_opengl_example', opengl_sources , include_directories : include_directories(['./include', 'examples/opengl']), link_with: [openhmd_lib], dependencies : [sdldep, gldep, glewdep], install : true)
 endif
 
 pkg = import('pkgconfig')
