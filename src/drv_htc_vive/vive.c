@@ -551,7 +551,7 @@ static ohmd_device* open_device(ohmd_driver* driver, ohmd_device_desc* desc)
 	//TODO: Confirm exact mesurements. Get for VIVE Pro.
 	priv->base.properties.hsize = 0.122822f;
 	priv->base.properties.vsize = 0.068234f;
-	priv->base.properties.lens_sep = 0.063500f;
+	priv->base.properties.lens_sep = 0.052f;
 	priv->base.properties.lens_vpos = 0.049694f;
 	priv->base.properties.fov = DEG_TO_RAD(111.435f);
 
