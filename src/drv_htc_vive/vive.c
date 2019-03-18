@@ -505,21 +505,45 @@ static ohmd_device* open_device(ohmd_driver* driver, ohmd_device_desc* desc)
 	if (vive_read_config(priv) != 0)
 	{
 		LOGW("Could not read config. Using defaults.\n");
-		priv->imu_config.acc_bias.x = 0.157200f;
-		priv->imu_config.acc_bias.y = -0.011150f;
-		priv->imu_config.acc_bias.z = -0.144900f;
+		switch (desc->revision)
+		{
+		case REV_VIVE:
+			priv->imu_config.acc_bias.x = 0.157200f;
+			priv->imu_config.acc_bias.y = -0.011150f;
+			priv->imu_config.acc_bias.z = -0.144900f;
 
-		priv->imu_config.acc_scale.x = 0.999700f;
-		priv->imu_config.acc_scale.y = 0.998900f;
-		priv->imu_config.acc_scale.z = 0.998000f;
+			priv->imu_config.acc_scale.x = 0.999700f;
+			priv->imu_config.acc_scale.y = 0.998900f;
+			priv->imu_config.acc_scale.z = 0.998000f;
 
-		priv->imu_config.gyro_bias.x = -0.027770f;
-		priv->imu_config.gyro_bias.y = -0.011410f;
-		priv->imu_config.gyro_bias.z = -0.014760f;
+			priv->imu_config.gyro_bias.x = -0.027770f;
+			priv->imu_config.gyro_bias.y = -0.011410f;
+			priv->imu_config.gyro_bias.z = -0.014760f;
 
-		priv->imu_config.gyro_scale.x = 1.0f;
-		priv->imu_config.gyro_scale.y = 1.0f;
-		priv->imu_config.gyro_scale.z = 1.0f;
+			priv->imu_config.gyro_scale.x = 1.0f;
+			priv->imu_config.gyro_scale.y = 1.0f;
+			priv->imu_config.gyro_scale.z = 1.0f;
+			break;
+		case REV_VIVE_PRO:
+			priv->imu_config.acc_bias.x = 0.01305f;
+			priv->imu_config.acc_bias.y = -0.1467f;
+			priv->imu_config.acc_bias.z = -0.1395f;
+
+			priv->imu_config.acc_scale.x = 0.999600f;
+			priv->imu_config.acc_scale.y = 0.999400f;
+			priv->imu_config.acc_scale.z = 0.996500f;
+
+			priv->imu_config.gyro_bias.x = -0.01858f;
+			priv->imu_config.gyro_bias.y = 0.01856f;
+			priv->imu_config.gyro_bias.z = 0.004653f;
+
+			priv->imu_config.gyro_scale.x = 1.0f;
+			priv->imu_config.gyro_scale.y = 1.0f;
+			priv->imu_config.gyro_scale.z = 1.0f;
+			break;
+		default:
+			LOGE("Unknown VIVE revision.\n");
+		}
 	}
 
 	if (vive_get_range_packet(priv) != 0)
