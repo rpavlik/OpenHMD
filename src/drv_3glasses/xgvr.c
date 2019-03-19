@@ -180,7 +180,9 @@ static int _getf(ohmd_device* device, ohmd_float_value type, float* out)
         break;
 
     case OHMD_ANGULAR_VELOCITY:
-        *(vec3f*)out = *(vec3f*)priv->hmd_data.gyr;
+        out[0] = -priv->hmd_data.gyr[1];
+        out[1] = priv->hmd_data.gyr[0];
+        out[2] = priv->hmd_data.gyr[2];
         break;
 
     default:
